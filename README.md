@@ -46,13 +46,13 @@ print "Total json objects: " + str(len(data))
 print "Keyword counts: " + str(tweets_keywords_count)
 
 #Which results in: 
-#	Total json objects: 11717
-#	Keyword counts: {'marketplace': 54, 'thermostat': 18, 'nest': 80, 'rebate': 23, 'honeywell': 1, 'smart': 2503, 'store': 1941}
+	Total json objects: 11717
+	Keyword counts: {'marketplace': 54, 'thermostat': 18, 'nest': 80, 'rebate': 23, 'honeywell': 1, 'smart': 2503, 'store': 1941}
 #I found that the python string matching was case-sensitive so I changed it to this:
 if keyword in tweet["text"].lower():
 #which results in:
-#	Total json objects: 11717
-#	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
+	Total json objects: 11717
+	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
 #Since we still are not seeing the counts match up, I made a flag to catch tweets that have no keywords and add them to a separate list:
 tweets_keywords_count = dict()
 tweets_keywords = ["nest", "ecobee", "rebate", "thermostat", "smart", "honeywell", "marketplace", "store", "retroactive"]
@@ -74,10 +74,10 @@ print "Total keyword tweets: " + str(sum(tweets_keywords_count.values()))
 print "Total no-keyword tweets: " + str(len(tweets_without_keywords))
 
 #Which prints: 
->	Total json objects: 11717
->	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
->	Total keyword tweets: 7442
->	Total no-keyword tweets: 4312
+	Total json objects: 11717
+	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
+	Total keyword tweets: 7442
+	Total no-keyword tweets: 4312
 #The 37 tweet difference between the keyword and no-keyword count, I beleive is due to multiple keywords in one tweet. 
 #To find out why the tweets with no keywords were gathered in the first place, I added a print command at the end of the script to examine the json object of a tweet with no keywords:
 print json.dumps(tweets_without_keywords[0], indent=2)
