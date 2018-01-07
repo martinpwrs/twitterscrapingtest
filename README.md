@@ -74,10 +74,10 @@ print "Total keyword tweets: " + str(sum(tweets_keywords_count.values()))
 print "Total no-keyword tweets: " + str(len(tweets_without_keywords))
 
 #Which prints: 
-	Total json objects: 11717
-	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
-	Total keyword tweets: 7442
-	Total no-keyword tweets: 4312
+>	Total json objects: 11717
+>	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
+>	Total keyword tweets: 7442
+>	Total no-keyword tweets: 4312
 #The 37 tweet difference between the keyword and no-keyword count, I beleive is due to multiple keywords in one tweet. 
 #To find out why the tweets with no keywords were gathered in the first place, I added a print command at the end of the script to examine the json object of a tweet with no keywords:
 print json.dumps(tweets_without_keywords[0], indent=2)
