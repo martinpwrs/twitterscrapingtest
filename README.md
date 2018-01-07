@@ -30,8 +30,8 @@ sed -i '$!s/$/,/' tweets.json #Add a comma to the end of each line except the la
 sed -i '1s/^/[/' tweets.json # Add a open square bracket to the start of the file.
 sed -i '$ a\ ]' tweets.json # Add a close square bracket to the end of the file.
 
-# tweets.json can now be loaded as a json file using json.load()
-# I did a counting loop on the json to find how many times each keyword was used
+#tweets.json can now be loaded as a json file using json.load()
+#I did a counting loop on the json to find how many times each keyword was used
 
 tweets_keywords_count = dict()
 tweets_keywords = ["nest", "ecobee", "rebate", "thermostat", "smart", "honeywell", "marketplace", "store", "retroactive"]
@@ -45,15 +45,15 @@ for tweet in data:
 print "Total json objects: " + str(len(data))
 print "Keyword counts: " + str(tweets_keywords_count)
 
-# Which results in: 
+#Which results in: 
 #	Total json objects: 11717
 #	Keyword counts: {'marketplace': 54, 'thermostat': 18, 'nest': 80, 'rebate': 23, 'honeywell': 1, 'smart': 2503, 'store': 1941}
-# I found that the python string matching was case-sensitive so I changed it to this:
-#         if keyword in tweet["text"].lower():
-# which results in:
+#I found that the python string matching was case-sensitive so I changed it to this:
+if keyword in tweet["text"].lower():
+#which results in:
 #	Total json objects: 11717
 #	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
-# Since we still are not seeing the counts match up, I made a flag to catch tweets that have no keywords and add them to a separate list:
+#Since we still are not seeing the counts match up, I made a flag to catch tweets that have no keywords and add them to a separate list:
 tweets_keywords_count = dict()
 tweets_keywords = ["nest", "ecobee", "rebate", "thermostat", "smart", "honeywell", "marketplace", "store", "retroactive"]
 tweets_without_keywords = []
@@ -78,18 +78,18 @@ print "Total no-keyword tweets: " + str(len(tweets_without_keywords))
 #	Keyword counts: {'marketplace': 160, 'thermostat': 28, 'nest': 122, 'rebate': 29, 'honeywell': 3, 'smart': 4267, 'store': 2832, 'retroactive': 1}
 #	Total keyword tweets: 7442
 #	Total no-keyword tweets: 4312
-# The 37 tweet difference between the keyword and no-keyword count, I beleive is due to multiple keywords in one tweet. 
-# To find out why the tweets with no keywords were gathered in the first place, I added a print command at the end of the script to examine the json object of a tweet with no keywords:
+#The 37 tweet difference between the keyword and no-keyword count, I beleive is due to multiple keywords in one tweet. 
+#To find out why the tweets with no keywords were gathered in the first place, I added a print command at the end of the script to examine the json object of a tweet with no keywords:
 print json.dumps(tweets_without_keywords[0], indent=2)
-# I piped this output into a grep command to do a quick manual check if any keywords show up:
+#I piped this output into a grep command to do a quick manual check if any keywords show up:
 python reader.py | grep store
-# Which gave this output showing that tweepy catches search keywords in the expanded URL of a tweet's short-URL
-#          "expanded_url": "https://store.sixxammusic.com/collections/gift-guide", 
-#          "display_url": "store.sixxammusic.com/collections/gi\u2026"
-#            "expanded_url": "https://store.sixxammusic.com/collections/gift-guide", 
-#            "display_url": "store.sixxammusic.com/collections/gi\u2026"
+#Which gave this output showing that tweepy catches search keywords in the expanded URL of a tweet's short-URL
+          "expanded_url": "https://store.sixxammusic.com/collections/gift-guide", 
+          "display_url": "store.sixxammusic.com/collections/gi\u2026"
+            "expanded_url": "https://store.sixxammusic.com/collections/gift-guide", 
+            "display_url": "store.sixxammusic.com/collections/gi\u2026"
 
-# Knowing that these tweets are not relevant to the search, I want to remove them from our json file. I made a backup of tweets.json. I added this loop to the script to delete the tweets with no keywords in the actual tweet text and then overwrite tweets.json with the cultivated tweets.
+#Knowing that these tweets are not relevant to the search, I want to remove them from our json file. I made a backup of tweets.json. I added this loop to the script to delete the tweets with no keywords in the actual tweet text and then overwrite tweets.json with the cultivated tweets.
 for tweet in tweets_without_keywords:
     data.remove(tweet)
 with open("tweets.json", "w") as output_file:
